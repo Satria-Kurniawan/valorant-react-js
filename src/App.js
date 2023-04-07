@@ -1,51 +1,51 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import axios from "axios"
-import { useState, useEffect } from "react"
-import Agents from "./components/Agents/Agents"
-import AgentDisplay from "./components/Display/AgentDisplay"
-import AbilitiesDisplay from "./components/Display/AbilitiesDisplay"
-import agentsPlus from "./assets/AgentsPlus"
-import Navbar from "./components/Navbar/Navbar"
-import CompetitiveTiers from "./components/Tiers/CompetitiveTiers"
-import Weapons from "./components/Weapons/Weapons"
-import Maps from "./components/Maps/Maps"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Agents from "./components/Agents/Agents";
+import AgentDisplay from "./components/Display/AgentDisplay";
+import AbilitiesDisplay from "./components/Display/AbilitiesDisplay";
+import agentsPlus from "./assets/AgentsPlus";
+import Navbar from "./components/Navbar/Navbar";
+import CompetitiveTiers from "./components/Tiers/CompetitiveTiers";
+import Weapons from "./components/Weapons/Weapons";
+import Maps from "./components/Maps/Maps";
 
 const App = () => {
-  const [agents, setAgents] = useState([])
-  const [agent, setAgent] = useState([])
-  const [selected, setSelected] = useState({})
-  const [video, setVideo] = useState({})
-  const [ability, setAbility] = useState({})
+  const [agents, setAgents] = useState([]);
+  const [agent, setAgent] = useState([]);
+  const [selected, setSelected] = useState({});
+  const [video, setVideo] = useState({});
+  const [ability, setAbility] = useState({});
 
   useEffect(() => {
-    getAgents()
-  }, [])
+    getAgents();
+  }, []);
 
   const getAgents = async () => {
-    const response = await axios.get("https://valorant-api.com/v1/agents")
+    const response = await axios.get("https://valorant-api.com/v1/agents");
 
     setAgents(
       response.data.data.filter((agent) => agent.isPlayableCharacter === true)
-    )
-  }
+    );
+  };
 
   const getAgent = async (uuid) => {
     const response = await axios.get(
       `https://valorant-api.com/v1/agents/${uuid}`
-    )
-    setAgent(response.data.data)
-    setSelected({ agentUuid: uuid })
-    setVideo(null)
-    setAbility(null)
-  }
+    );
+    setAgent(response.data.data);
+    setSelected({ agentUuid: uuid });
+    setVideo(null);
+    setAbility(null);
+  };
 
   const showVideo = (i, ability) => {
     agentsPlus.filter(
       (agentPlus) =>
         agentPlus.name === agent.displayName && setVideo(agentPlus.videos[i])
-    )
-    setAbility(ability)
-  }
+    );
+    setAbility(ability);
+  };
 
   return (
     <div
@@ -69,7 +69,7 @@ const App = () => {
                   autoPlay
                   loop
                   muted
-                  className="relative md:h-screen md:-mt-8"
+                  className="relative md:h-screen md:-mt-12"
                 >
                   <source
                     src="videos/agent-background-generic.mp4"
@@ -114,7 +114,7 @@ const App = () => {
         </Routes>
       </Router>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
